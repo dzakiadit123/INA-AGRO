@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>INA Agro — Sistem Evaluasi Kesesuaian Lahan AI</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+
+  <!-- LAYAR 1: ENTRY POINT / LOGIN -->
+  <section id="authScreen" class="auth-screen">
+    <div class="auth-card">
+      <div class="auth-hero-box">
+        <div>
+          <div class="auth-hero-title">
+            <h1>INA Agro</h1>
+            <span class="pill-ai-lahan">AI Lahan</span>
+          </div>
+          <p class="auth-hero-sub">Rekomendasi komoditas sesuai kondisi lahan</p>
+        </div>
+        <div class="auth-sprout-box" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/>
+          </svg>
+        </div>
+      </div>
+
+      <form id="loginForm">
+        <div class="field-group">
+          <label class="field-label" for="loginEmail">Email</label>
+          <input id="loginEmail" type="email" class="input-box" value="petani.demo@ina-agro.id" required />
+        </div>
+
+        <div class="field-group">
+          <div class="field-label-row">
+            <label class="field-label" for="loginPassword">Password</label>
+            <a class="link-green" href="#reset" onclick="alert('Gunakan akun demo petani.demo@ina-agro.id untuk masuk.'); return false;">Lupa password?</a>
+          </div>
+          <input id="loginPassword" type="password" class="input-box" value="••••••••••••" required />
+        </div>
+
+        <button type="submit" class="btn-green">
+          <span>Masuk</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+          </svg>
+        </button>
+      </form>
+
+      <div class="divider-atau">atau</div>
+
+      <button id="createAccountBtn" type="button" class="btn-outline-green">Buat Akun</button>
+
+      <div class="quick-header">
+        <strong>Fitur utama</strong>
+        <span>Akses cepat ke aplikasi</span>
+      </div>
+
+      <div class="quick-grid-3">
+        <button type="button" class="quick-tile" data-quick-nav="rekomendasi">
+          <div class="quick-tile-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/>
+            </svg>
+          </div>
+          <span>Rekomendasi</span>
+        </button>
+
+        <button type="button" class="quick-tile" data-quick-nav="rekomendasi">
+          <div class="quick-tile-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/>
+            </svg>
+          </div>
+          <span>Kondisi Lahan</span>
+        </button>
+
+        <button type="button" class="quick-tile" data-quick-nav="riwayat">
+          <div class="quick-tile-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/>
+            </svg>
+          </div>
+          <span>Riwayat</span>
+        </button>
+      </div>
+
+      <p class="auth-footer-note">
+        Kurasi Multi-Dataset Kaggle untuk <strong>6 Komoditas Utama INA Agro</strong> (Bawang Merah, Bawang Putih, Cabai Merah, Cabai Rawit, Jagung, Kentang).
+      </p>
+    </div>
+  </section>
+
+  <!-- APLIKASI UTAMA -->
+  <div id="appShell" class="hidden">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div id="brandLockup" class="brand-lockup">
+          <div class="brand-logo-sq">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="brand-title-row">
+              <strong>INA Agro</strong>
+              <span class="badge-ai-sm">AI</span>
+            </div>
+            <div class="brand-sub">Rekomendasi komoditas sesuai kondisi lahan</div>
+          </div>
+        </div>
+
+        <nav class="nav-pill-group" aria-label="Menu Utama">
+          <button class="nav-pill-btn active" data-tab="home">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+            <span>Home</span>
+          </button>
+
+          <button class="nav-pill-btn" data-tab="rekomendasi">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/>
+            </svg>
+            <span>Rekomendasi</span>
+          </button>
+
+          <button class="nav-pill-btn" data-tab="riwayat">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/>
+            </svg>
+            <span>Riwayat</span>
+            <span id="navHistoryCount" class="nav-count-badge">2</span>
+          </button>
+
+          <button class="nav-pill-btn" data-tab="profil">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+            </svg>
+            <span>Profil</span>
+          </button>
+        </nav>
+
+        <div class="user-chip" onclick="switchTab('profil')">
+          <span id="navUserInitials" class="user-avatar-circle">PD</span>
+          <span id="navUserName" class="user-chip-name">Petani Demo</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-wrap">
+      <!-- TAB 1: HOME -->
+      <section id="view-home" class="tab-view">
+        <div class="home-hero-card">
+          <div>
+            <div class="welcome-pill">
+              <span>✨ Selamat datang, <span id="welcomeBadgeName">Petani Demo</span></span>
+            </div>
+            <h2>INA Agro — Sistem Evaluasi Kesesuaian Lahan &amp; Rekomendasi Komoditas Berbasis AI</h2>
+            <p>
+              Model AI dilatih, divalidasi, dan diuji dari hasil kurasi <strong>4 Dataset Kaggle</strong> khusus untuk
+              <strong>6 Komoditas Utama INA Agro</strong>: Bawang Merah, Bawang Putih, Cabai Merah, Cabai Rawit, Jagung, dan Kentang.
+            </p>
+          </div>
+          <button id="heroStartBtn" type="button" class="btn-hero-cta">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/>
+            </svg>
+            <span>Mulai Analisis Lahan</span>
+          </button>
+        </div>
+
+        <!-- KARTU PEMBAGIAN DATASET: TRAINING, VALIDATION & TESTING -->
+        <div class="section-card">
+          <div class="section-head-row">
+            <h3>Evaluasi Pipeline Kurasi Multi-Dataset Kaggle (Train / Validation / Test)</h3>
+            <span>Stratified Split 70% : 15% : 15% dari data/ina_agro_kaggle_curated.csv (1.800 baris)</span>
+          </div>
+          <div class="splits-grid-3">
+            <div class="split-metric-card">
+              <span class="split-tag">TRAINING SET (70% • {{ meta.data_splits.train.samples }} sampel)</span>
+              <h4>{{ meta.data_splits.train.top1_accuracy }}%</h4>
+              <p>Top-1 Accuracy • Top-3: {{ meta.data_splits.train.top3_accuracy }}% (<code>data/splits/train.csv</code>)</p>
+            </div>
+            <div class="split-metric-card">
+              <span class="split-tag">VALIDATION SET (15% • {{ meta.data_splits.validation.samples }} sampel)</span>
+              <h4>{{ meta.data_splits.validation.top1_accuracy }}%</h4>
+              <p>Seleksi Hyperparameter • Top-3: {{ meta.data_splits.validation.top3_accuracy }}% (<code>data/splits/validation.csv</code>)</p>
+            </div>
+            <div class="split-metric-card">
+              <span class="split-tag">TESTING SET (15% • {{ meta.data_splits.test.samples }} sampel)</span>
+              <h4>{{ meta.data_splits.test.top1_accuracy }}%</h4>
+              <p>Top-3: {{ meta.data_splits.test.top3_accuracy }}% • Macro F1: {{ meta.data_splits.test.macro_f1 }}% (<code>data/splits/test.csv</code>)</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-card">
+          <div class="section-head-row">
+            <h3>Panduan Alur Cepat 3 Langkah</h3>
+            <span>Dapatkan rekomendasi komoditas dalam hitungan detik</span>
+          </div>
+          <div class="steps-grid">
+            <div class="step-box">
+              <div class="step-num-badge">1</div>
+              <div>
+                <h4>Pilih Rekomendasi</h4>
+                <p>Buka menu <strong>Rekomendasi</strong> atau tekan tombol <em>Mulai Analisis Lahan</em>.</p>
+              </div>
+            </div>
+            <div class="step-box">
+              <div class="step-num-badge">2</div>
+              <div>
+                <h4>Isi Hara &amp; Agroklimat</h4>
+                <p>Masukkan kadar N, P, K tanah serta suhu, kelembapan, pH tanah, dan curah hujan bulanan.</p>
+              </div>
+            </div>
+            <div class="step-box">
+              <div class="step-num-badge">3</div>
+              <div>
+                <h4>Klik Dapatkan Rekomendasi</h4>
+                <p>Lihat 3 komoditas utama INA Agro terbaik beserta skor kecocokan (%) dan kelas kesesuaian S1–N.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="commodities-header">
+          <div>
+            <h3>6 Komoditas Utama INA Agro (Terkurasi dari 4 Sumber Kaggle)</h3>
+            <p>Profil agroekologi &amp; sumber dataset Kaggle masing-masing komoditas</p>
+          </div>
+          <div class="verified-badge">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>
+            </svg>
+            <span>6 Komoditas Resmi INA Agro</span>
+          </div>
+        </div>
+
+        <div id="commoditiesGrid" class="commodities-grid"></div>
+      </section>
+
+      <!-- TAB 2: REKOMENDASI -->
+      <section id="view-rekomendasi" class="tab-view hidden">
+        <div class="rek-container">
+          <div id="wizardInputCard" class="wizard-card">
+            <div class="wizard-header">
+              <div class="wizard-header-left">
+                <button id="backToHomeBtn" type="button" class="btn-back-sq" title="Kembali ke Home">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m12 19-7-7 7-7"/><path d="M19 12H5"/>
+                  </svg>
+                </button>
+                <div>
+                  <h2>Input Kondisi Lahan</h2>
+                  <p>7 Fitur Tanah &amp; Iklim — 6 Komoditas Utama INA Agro</p>
+                </div>
+              </div>
+
+              <select id="presetDropdown" class="preset-select" aria-label="Pilih Contoh Kondisi Lahan Komoditas">
+                <option value="shallot" selected>Contoh: Bawang Merah</option>
+                <option value="garlic">Contoh: Bawang Putih</option>
+                <option value="red_chili">Contoh: Cabai Merah</option>
+                <option value="bird_eye_chili">Contoh: Cabai Rawit</option>
+                <option value="maize">Contoh: Jagung</option>
+                <option value="potato">Contoh: Kentang</option>
+                <option value="anomali">Uji Kondisi Cuaca Ekstrem</option>
+              </select>
+            </div>
+
+            <div class="wizard-body">
+              <form id="landConditionForm">
+                <div class="step-section-head">
+                  <div class="step-circle-title">
+                    <span class="step-circle-badge">1</span>
+                    <h3>Lokasi Lahan</h3>
+                  </div>
+                </div>
+
+                <div class="field-group" style="margin-bottom:0;">
+                  <label class="field-label" for="lokasiWilayah">Lokasi lahan (Tingkat Kecamatan / Wilayah Agroekologi)</label>
+                  <select id="lokasiWilayah" class="select-box">
+                    <option value="Kec. Brebes, Kab. Brebes (Sentra Bawang Merah)" selected>Kec. Brebes, Kab. Brebes (Sentra Bawang Merah)</option>
+                    <option value="Kec. Sembalun, Kab. Lombok Timur (Dataran Tinggi)">Kec. Sembalun, Kab. Lombok Timur (Dataran Tinggi)</option>
+                    <option value="Kec. Lembang, Kab. Bandung Barat">Kec. Lembang, Kab. Bandung Barat</option>
+                    <option value="Kec. Pare, Kab. Kediri">Kec. Pare, Kab. Kediri</option>
+                    <option value="Kec. Dramaga, Kab. Bogor">Kec. Dramaga, Kab. Bogor</option>
+                    <option value="Kec. Pangalengan, Kab. Bandung (Dataran Tinggi)">Kec. Pangalengan, Kab. Bandung (Dataran Tinggi)</option>
+                    <option value="Kec. Cisarua, Kab. Bogor (Uji Curah Hujan Ekstrem)">Kec. Cisarua, Kab. Bogor (Uji Curah Hujan Ekstrem)</option>
+                  </select>
+                </div>
+
+                <div class="minimization-note">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  </svg>
+                  <span>Prinsip minimisasi data: cukup pilih tingkat kecamatan tanpa koordinat GPS presisi pemilik lahan.</span>
+                </div>
+
+                <div class="step-section-head">
+                  <div class="step-circle-title">
+                    <span class="step-circle-badge">2</span>
+                    <h3>Unsur Hara Tanah &amp; Agroklimat</h3>
+                  </div>
+                  <span class="step-meta-right">7 Parameter Kurasi Kaggle</span>
+                </div>
+
+                <div class="agro-grid-2">
+                  <div>
+                    <label class="field-label" for="inputN">Nitrogen (N)</label>
+                    <div class="input-with-unit">
+                      <input id="inputN" type="number" step="1" min="0" max="200" value="92" required />
+                      <span class="unit-suffix">kg/ha</span>
+                    </div>
+                    <span class="field-hint">Rentang kurasi: 55 – 145 kg/ha</span>
+                  </div>
+
+                  <div>
+                    <label class="field-label" for="inputP">Fosfor (P)</label>
+                    <div class="input-with-unit">
+                      <input id="inputP" type="number" step="1" min="0" max="200" value="56" required />
+                      <span class="unit-suffix">kg/ha</span>
+                    </div>
+                    <span class="field-hint">Rentang kurasi: 30 – 105 kg/ha</span>
+                  </div>
+
+                  <div>
+                    <label class="field-label" for="inputK">Kalium (K)</label>
+                    <div class="input-with-unit">
+                      <input id="inputK" type="number" step="1" min="0" max="250" value="86" required />
+                      <span class="unit-suffix">kg/ha</span>
+                    </div>
+                    <span class="field-hint">Rentang kurasi: 14 – 170 kg/ha</span>
+                  </div>
+
+                  <div>
+                    <label class="field-label" for="inputTemp">Suhu (°C)</label>
+                    <div class="input-with-unit">
+                      <input id="inputTemp" type="number" step="0.1" min="5" max="45" value="28.2" required />
+                      <span class="unit-suffix">°C</span>
+                    </div>
+                    <span class="field-hint">Rentang kurasi: 13.5 – 32.5 °C</span>
+                  </div>
+
+                  <div>
+                    <label class="field-label" for="inputHumidity">Kelembapan (%)</label>
+                    <div class="input-with-unit">
+                      <input id="inputHumidity" type="number" step="0.1" min="10" max="100" value="64" required />
+                      <span class="unit-suffix">%</span>
+                    </div>
+                    <span class="field-hint">Rentang kurasi: 50 – 90 %</span>
+                  </div>
+
+                  <div>
+                    <label class="field-label" for="inputPh">pH tanah</label>
+                    <div class="input-with-unit">
+                      <input id="inputPh" type="number" step="0.1" min="3.5" max="9.9" value="6.3" required />
+                      <span class="unit-suffix">pH</span>
+                    </div>
+                    <span class="field-hint">Rentang kurasi: 4.9 – 7.3</span>
+                  </div>
+
+                  <div style="grid-column: 1 / -1;">
+                    <label class="field-label" for="inputRainfall">Curah hujan (mm/bulan)</label>
+                    <div class="input-with-unit">
+                      <input id="inputRainfall" type="number" step="0.1" min="0" max="500" value="82" required />
+                      <span class="unit-suffix">mm/bln</span>
+                    </div>
+                    <span class="field-hint">Rentang kurasi: 40 – 240 mm/bulan</span>
+                  </div>
+                </div>
+
+                <div class="privacy-banner">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:2px;">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                  </svg>
+                  <div>
+                    <strong>Pemberitahuan Privasi Data:</strong> Sistem hanya menggunakan 7 variabel hara/agroklimat dan lokasi tingkat
+                    kecamatan di atas untuk memproses rekomendasi kesesuaian lahan. Kami tidak mengumpulkan identitas pribadi sensitif.
+                  </div>
+                </div>
+
+                <div class="consent-row">
+                  <input id="consentCheckbox" type="checkbox" />
+                  <label for="consentCheckbox">
+                    Saya menyetujui data kondisi lahan anonim ini digunakan untuk evaluasi &amp; peningkatan akurasi model AI (opsional / opt-in).
+                  </label>
+                </div>
+
+                <button id="submitPredictBtn" type="submit" class="btn-green">Dapatkan Rekomendasi</button>
+              </form>
+            </div>
+          </div>
+
+          <!-- KARTU HASIL REKOMENDASI AI -->
+          <div id="wizardResultCard" class="wizard-card hidden">
+            <div class="wizard-header">
+              <div class="wizard-header-left">
+                <button id="backToInputBtn" type="button" class="btn-back-sq" title="Kembali Ubah Parameter">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m12 19-7-7 7-7"/><path d="M19 12H5"/>
+                  </svg>
+                </button>
+                <div>
+                  <h2>Hasil Rekomendasi AI</h2>
+                  <p id="resultLocationSubtitle">Analisis kurasi Kaggle selesai</p>
+                </div>
+              </div>
+              <span class="badge-ai-sm" style="font-size:0.78rem; padding:5px 11px;">Top-3 INA Agro</span>
+            </div>
+
+            <div class="wizard-body">
+              <div id="resultAnomalyArea"></div>
+              <div id="resultTop3Area"></div>
+
+              <div class="sub-block-title">Faktor yang memengaruhi</div>
+              <div class="sub-block-desc">Perbandingan 7 parameter input terhadap rentang Training Set (P10–P90) hasil kurasi Kaggle.</div>
+              <div id="resultFactorsArea" class="factors-grid-2"></div>
+
+              <div class="sub-block-title">Kelas Kesesuaian Lahan</div>
+              <div class="sub-block-desc">Klasifikasi kesesuaian lahan INA Agro</div>
+              <div class="legend-list">
+                <div class="legend-row" data-legend-code="S1" style="color:#166534;"><span>S1 Sangat Sesuai</span><span>Tanpa pembatas serius</span></div>
+                <div class="legend-row" data-legend-code="S2" style="color:#075985;"><span>S2 Cukup Sesuai</span><span>Pembatas ringan</span></div>
+                <div class="legend-row" data-legend-code="S3" style="color:#854d0e;"><span>S3 Sesuai Marginal</span><span>Pembatas agak berat</span></div>
+                <div class="legend-row" data-legend-code="N" style="color:#991b1b;"><span>N Tidak Sesuai</span><span>Pembatas berat</span></div>
+                <div class="legend-row" data-legend-code="BL" style="color:#475569;"><span>BL Belum Dinilai</span><span>Perlu verifikasi lapangan</span></div>
+              </div>
+
+              <div id="resultDisclaimer" class="disclaimer-note"></div>
+
+              <div class="result-actions-row">
+                <button id="saveHistoryBtn" type="button" class="btn-green">Simpan Riwayat</button>
+                <button id="viewDetailBtn" type="button" class="btn-outline-green">Lihat Detail</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: RIWAYAT -->
+      <section id="view-riwayat" class="tab-view hidden">
+        <div class="rek-container">
+          <div class="section-card">
+            <div class="section-head-row">
+              <div>
+                <h3>Riwayat Evaluasi Kesesuaian Lahan</h3>
+                <span>Daftar hasil rekomendasi komoditas yang tersimpan pada akun Anda</span>
+              </div>
+              <button id="deleteHistoryBtn" type="button" class="btn-outline-green" style="width:auto; padding:8px 14px; font-size:0.8rem; color:#991b1b; border-color:#fca5a5;">
+                Hapus Semua Riwayat
+              </button>
+            </div>
+            <div id="historyContainer"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: PROFIL -->
+      <section id="view-profil" class="tab-view hidden">
+        <div class="rek-container">
+          <div class="section-card">
+            <div class="section-head-row">
+              <div>
+                <h3>Profil Pengguna &amp; Sumber Kurasi Kaggle</h3>
+                <span>4 Dataset Kaggle terpadu untuk 6 Komoditas Utama INA Agro</span>
+              </div>
+            </div>
+
+            <div style="display:grid; gap:10px; margin-bottom:20px; font-size:0.9rem;">
+              <div><strong>Nama Pengguna:</strong> <span id="profileNameVal">Petani Demo</span></div>
+              <div><strong>Email Akun:</strong> <span id="profileEmailVal">petani.demo@ina-agro.id</span></div>
+              <div><strong>Dataset Terpadu:</strong> <code>data/ina_agro_kaggle_curated.csv</code> (1.800 sampel • 6 komoditas)</div>
+              <div><strong>Sumber Kurasi Kaggle:</strong>
+                <ul style="margin:6px 0 0 20px; color:var(--text-body); font-size:0.84rem; display:grid; gap:4px;">
+                  <li><code>atharvaingle/crop-recommendation-dataset</code> → <strong>Jagung</strong></li>
+                  <li><code>zsinghrahulk/potato-crop-dataset</code> → <strong>Kentang</strong></li>
+                  <li><code>srinivas1/allium-onion-garlic-yield-soil-dataset</code> → <strong>Bawang Merah &amp; Bawang Putih</strong></li>
+                  <li><code>devendra111/capsicum-chili-cultivation-soil-climate</code> → <strong>Cabai Merah &amp; Cabai Rawit</strong></li>
+                </ul>
+              </div>
+              <div><strong>Pembagian Data:</strong> 70% Training ({{ meta.data_splits.train.samples }}) • 15% Validation ({{ meta.data_splits.validation.samples }}) • 15% Testing ({{ meta.data_splits.test.samples }})</div>
+            </div>
+
+            <div class="privacy-banner">
+              <input id="profileConsentCheckbox" type="checkbox" style="margin-top:4px; accent-color:var(--green-700);" />
+              <label for="profileConsentCheckbox">
+                <strong>Partisipasi Peningkatan Model AI (Opt-in):</strong> Izinkan sistem menggunakan riwayat evaluasi lahan yang telah dianonimkan untuk pelatihan ulang model Random Forest INA Agro.
+              </label>
+            </div>
+
+            <button id="logoutBtn" type="button" class="btn-outline-green" style="margin-top:8px;">Keluar Akun</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- MODAL DETAIL KONTRAK API JSON -->
+  <div id="detailModal" class="modal-overlay hidden">
+    <div class="modal-box">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h3 style="font-size:1.05rem; font-weight:800;">Detail Respons Model AI &amp; Kurasi Kaggle (JSON)</h3>
+        <button id="closeDetailModal" type="button" class="btn-outline-green" style="width:auto; padding:6px 14px; font-size:0.82rem;">Tutup</button>
+      </div>
+      <p style="font-size:0.82rem; color:var(--text-muted); margin-top:4px;">
+        Keluaran endpoint <code>POST /api/predict</code> dengan 6 komoditas utama INA Agro.
+      </p>
+      <pre id="jsonPreviewBox" class="json-code-box"></pre>
+    </div>
+  </div>
+
+  <script src="/static/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,315 @@
+{
+  "curation_strategy": "Opsi B — Kurasi Multi-Dataset Kaggle untuk 6 Komoditas Utama INA Agro",
+  "kaggle_sources": [
+    {
+      "dataset_title": "Crop Recommendation Dataset (Atharva Ingle)",
+      "kaggle_slug": "atharvaingle/crop-recommendation-dataset",
+      "kaggle_url": "https://www.kaggle.com/datasets/atharvaingle/crop-recommendation-dataset",
+      "raw_file": "data/raw_kaggle/kaggle_crop_recommendation.csv",
+      "extracted_classes": [
+        "maize (Jagung)"
+      ]
+    },
+    {
+      "dataset_title": "Potato Crop Agronomy & Soil Dataset",
+      "kaggle_slug": "zsinghrahulk/potato-crop-dataset",
+      "kaggle_url": "https://www.kaggle.com/datasets/zsinghrahulk/potato-crop-dataset",
+      "raw_file": "data/raw_kaggle/kaggle_potato_agronomy.csv",
+      "extracted_classes": [
+        "potato (Kentang)"
+      ]
+    },
+    {
+      "dataset_title": "Allium (Onion & Garlic) Soil-Climate Dataset",
+      "kaggle_slug": "srinivas1/allium-onion-garlic-yield-soil-dataset",
+      "kaggle_url": "https://www.kaggle.com/datasets/srinivas1/allium-onion-garlic-yield-soil-dataset",
+      "raw_file": "data/raw_kaggle/kaggle_allium_horticulture.csv",
+      "extracted_classes": [
+        "shallot (Bawang Merah)",
+        "garlic (Bawang Putih)"
+      ]
+    },
+    {
+      "dataset_title": "Capsicum & Chili Cultivation Soil-Climate Dataset",
+      "kaggle_slug": "devendra111/capsicum-chili-cultivation-soil-climate",
+      "kaggle_url": "https://www.kaggle.com/datasets/devendra111/capsicum-chili-cultivation-soil-climate",
+      "raw_file": "data/raw_kaggle/kaggle_capsicum_chili.csv",
+      "extracted_classes": [
+        "red_chili (Cabai Merah)",
+        "bird_eye_chili (Cabai Rawit)"
+      ]
+    }
+  ],
+  "curated_dataset": {
+    "file": "data/ina_agro_kaggle_curated.csv",
+    "total_rows": 1800,
+    "num_classes": 6,
+    "classes": [
+      "shallot",
+      "garlic",
+      "red_chili",
+      "bird_eye_chili",
+      "maize",
+      "potato"
+    ]
+  },
+  "data_splits": {
+    "strategy": "Stratified Split 70% Train / 15% Validation / 15% Test",
+    "train": {
+      "samples": 1260,
+      "top1_accuracy": 100.0,
+      "top3_accuracy": 100.0,
+      "macro_precision": 100.0,
+      "macro_recall": 100.0,
+      "macro_f1": 100.0
+    },
+    "validation": {
+      "samples": 270,
+      "top1_accuracy": 92.59,
+      "top3_accuracy": 100.0,
+      "macro_precision": 92.62,
+      "macro_recall": 92.59,
+      "macro_f1": 92.59
+    },
+    "test": {
+      "samples": 270,
+      "top1_accuracy": 88.52,
+      "top3_accuracy": 100.0,
+      "macro_precision": 88.42,
+      "macro_recall": 88.52,
+      "macro_f1": 88.43
+    }
+  },
+  "selected_hyperparameters": {
+    "n_estimators": 300,
+    "max_depth": null,
+    "min_samples_leaf": 1
+  },
+  "validation_trials": [
+    {
+      "params": {
+        "n_estimators": 100,
+        "max_depth": 10,
+        "min_samples_leaf": 2
+      },
+      "val_accuracy_pct": 91.85
+    },
+    {
+      "params": {
+        "n_estimators": 200,
+        "max_depth": 14,
+        "min_samples_leaf": 1
+      },
+      "val_accuracy_pct": 91.85
+    },
+    {
+      "params": {
+        "n_estimators": 300,
+        "max_depth": null,
+        "min_samples_leaf": 1
+      },
+      "val_accuracy_pct": 92.59
+    }
+  ],
+  "algorithm": "RandomForestClassifier (Scikit-learn)",
+  "features": [
+    "N",
+    "P",
+    "K",
+    "temperature",
+    "humidity",
+    "ph",
+    "rainfall"
+  ],
+  "feature_importance_global": {
+    "K": 0.2628,
+    "temperature": 0.2383,
+    "rainfall": 0.1338,
+    "N": 0.0974,
+    "ph": 0.0966,
+    "P": 0.0937,
+    "humidity": 0.0774
+  },
+  "crop_ranges": {
+    "bird_eye_chili": {
+      "N": [
+        70.0,
+        100.0
+      ],
+      "P": [
+        44.0,
+        64.0
+      ],
+      "K": [
+        57.9,
+        87.0
+      ],
+      "temperature": [
+        25.1,
+        30.0
+      ],
+      "humidity": [
+        62.0,
+        76.7
+      ],
+      "ph": [
+        5.6,
+        6.5
+      ],
+      "rainfall": [
+        79.9,
+        148.4
+      ]
+    },
+    "garlic": {
+      "N": [
+        81.0,
+        114.0
+      ],
+      "P": [
+        58.0,
+        78.0
+      ],
+      "K": [
+        84.0,
+        121.0
+      ],
+      "temperature": [
+        16.4,
+        20.8
+      ],
+      "humidity": [
+        67.6,
+        80.0
+      ],
+      "ph": [
+        6.0,
+        6.9
+      ],
+      "rainfall": [
+        87.0,
+        147.6
+      ]
+    },
+    "maize": {
+      "N": [
+        63.0,
+        91.1
+      ],
+      "P": [
+        37.9,
+        60.0
+      ],
+      "K": [
+        16.0,
+        26.1
+      ],
+      "temperature": [
+        21.1,
+        27.7
+      ],
+      "humidity": [
+        57.0,
+        74.2
+      ],
+      "ph": [
+        5.6,
+        6.8
+      ],
+      "rainfall": [
+        72.8,
+        147.9
+      ]
+    },
+    "potato": {
+      "N": [
+        90.0,
+        127.0
+      ],
+      "P": [
+        64.0,
+        88.0
+      ],
+      "K": [
+        107.9,
+        148.1
+      ],
+      "temperature": [
+        15.2,
+        20.1
+      ],
+      "humidity": [
+        72.4,
+        86.3
+      ],
+      "ph": [
+        5.3,
+        6.1
+      ],
+      "rainfall": [
+        129.8,
+        204.8
+      ]
+    },
+    "red_chili": {
+      "N": [
+        97.9,
+        133.0
+      ],
+      "P": [
+        58.0,
+        87.1
+      ],
+      "K": [
+        80.0,
+        111.1
+      ],
+      "temperature": [
+        22.3,
+        26.5
+      ],
+      "humidity": [
+        67.6,
+        80.1
+      ],
+      "ph": [
+        5.8,
+        6.8
+      ],
+      "rainfall": [
+        115.0,
+        181.1
+      ]
+    },
+    "shallot": {
+      "N": [
+        78.0,
+        109.0
+      ],
+      "P": [
+        45.9,
+        68.0
+      ],
+      "K": [
+        70.0,
+        101.1
+      ],
+      "temperature": [
+        26.1,
+        30.7
+      ],
+      "humidity": [
+        58.6,
+        70.6
+      ],
+      "ph": [
+        5.8,
+        6.8
+      ],
+      "rainfall": [
+        54.8,
+        109.1
+      ]
+    }
+  }
+}
